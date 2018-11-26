@@ -14,7 +14,7 @@ echo -e " \e[94m @@@ #  \e[34m     8888     ,88    \e[31m 8 8888               8
 echo -e " \e[94m @@@ #  \e[34m       8888888P      \e[31m 8 888888888888       8 8888          \e[34m     8 8888      88  \e[31m 8 888888888888  8         8   88888  8 888888888P              8 8888       \e[94m #"
 echo -e " \e[94m @@@ #                                                                                                                                                                #"
 echo -e " \e[94m  @@ #                                                                                                                                                                #"
-echo -e " \e[94m   @ ##################################################################################################################################################################"
+echo -e " \e[94m   @ ##################################################################################################################################################################\n\n"
 
 
 echo -e "       ########################################################"
@@ -30,6 +30,7 @@ error=0
 	echo -e "\n\e[39mdeb http://http.kali.org/kali kali-rolling main non-free contrib >> /etc/apt/sources.list " 	
 } || {
 	$error = 1
+	echo -e "\n\e[31mdeb http://http.kali.org/kali kali-rolling main non-free contrib >> /etc/apt/sources.list " 	
 	echo -e "\e[31m"
 	echo -e "       ######"
 	echo -e "      # FAIL #"
@@ -42,18 +43,19 @@ error=0
 	echo -e "deb-src http://http.kali.org/kali kali-rolling main non-free contrib > /etc/apt/sources.list "
 } || {	
 	$error = 1
+	echo -e "\e[31mdeb-src http://http.kali.org/kali kali-rolling main non-free contrib > /etc/apt/sources.list "
 	echo -e "\e[31m"
 	echo -e "       ######"
 	echo -e "      # FAIL #"
 	echo -e "       ###### "
 	echo -e "\e[94m"
-}
+     }
 
 if [ "$error" != "1" ]; then
 	echo -e "\e[32m"
-	echo -e "       ####"
-	echo -e "      # OK #"
-	echo -e "       #### "
+	echo -e "       ######"
+	echo -e "      # DONE #"
+	echo -e "       ###### "
 	echo -e "\e[94m"
 else
 	echo -e "\e[33m"
@@ -71,38 +73,65 @@ echo -e "      #           ====== UPDATING & UPGRADING ======           #"
 echo -e "      #                                                        #"
 echo -e "       ########################################################"
 
-echo -e "\n       \e[34m--- APT CLEAN ---\e[39m"
-apt clean
-echo -e "\e[32m"
-echo -e "       ####"
-echo -e "      # OK #"
-echo -e "       #### "
-echo -e "\e[94m"
+error=0
 
-echo -e "      \e[34m--- APT UPDATE ---\e[39m"
-apt update
-echo -e "\e[32m"
-echo -e "       ####"
-echo -e "      # OK #"
-echo -e "       #### "
-echo -e "\e[94m"
+echo -e "\n      \e[34m--- APT CLEAN ---\e[39m"
+apt clean ||
+{
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+	
+}
 
-echo -e "      \e[34m--- APT FULL-UPGRADE ---\e[39m"
-apt full-upgrade
-echo -e "\e[32m"
-echo -e "       ####"
-echo -e "      # OK #"
-echo -e "       #### "
-echo -e "\e[94m"
+echo -e "\n      \e[34m--- APT UPDATE ---\e[39m"
+apt update ||
+{
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+}
 
-echo -e "      \e[34m--- APT AUTOREMOVE ---\e[39m"
-apt autoremove
-echo -e "\e[32m"
-echo -e "       ####"
-echo -e "      # OK #"
-echo -e "       #### "
-echo -e "\e[94m"
+echo -e "\n      \e[34m--- APT FULL-UPGRADE ---\e[39m"
+apt full-upgrade ||
+{
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+}
+	
+echo -e "\n      \e[34m--- APT AUTOREMOVE ---\e[39m"
+apt autoremove ||
+{
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+}
 
+if [ "$error" != "1" ]; then
+	echo -e "\e[32m"
+	echo -e "       ######"
+	echo -e "      # DONE #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+else
+	echo -e "\e[33m"
+	echo -e "       ######################"
+	echo -e "      # FINISHED WITH ERRORS #"
+	echo -e "       ###################### "
+	echo -e "\e[94m"
+fi
 
 
 echo -e "       ########################################################"
@@ -111,6 +140,76 @@ echo -e "      #         ====== DOWNLOADING & INSTALLING  ======        #"
 echo -e "      #                                                        #"
 echo -e "       ########################################################"
 
+error=0
+mkdir /root/Hacks/Scripts ||
+{
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+}
+
+
+echo -e "\n      \e[34m--- TERMINATOR ---\e[39m"
+apt install terminator ||
+{
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+}
+
+
+echo -e "\n      \e[34m--- SECLISTS ---\e[39m"
+{
+	mkdir /root/Hacks/SecLists &&
+	git clone https://github.com/danielmiessler/SecLists.git /root/Hacks/SecLists && ## TESTOWE DANE - POPRAWIC
+	rm /root/Hack/SecLists/CON* &&
+	rm /root/Hack/SecLists/LICENSE &&
+	rm /root/Hack/SecLists/README.md
+
+} || {
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+     }  
+
+
+echo -e "\n      \e[34m--- RED HAWK ---\e[39m"
+{
+	mkdir /root/Hacks/RedHawk &&
+	git clone git clone https://github.com/Tuhinshubhra/RED_HAWK.git /root/Hacks/Red_Hawk ## TESTOWE DANE - POPRAWIC
+
+} || {
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+     }  
+
+
+if [ "$error" != "1" ]; then
+	echo -e "\e[32m"
+	echo -e "       ######"
+	echo -e "      # DONE #"
+	echo -e "       ###### "
+	echo -e "\e[94m\n\n\n"
+else
+	echo -e "\e[33m"
+	echo -e "       ######################"
+	echo -e "      # FINISHED WITH ERRORS #"
+	echo -e "       ###################### "
+	echo -e "\e[94m\n\n\n"
+fi
 
 
 echo -e "       ########################################################"
@@ -119,5 +218,5 @@ echo -e "      #                 ====== SETTINGS ======                 #"
 echo -e "      #                                                        #"
 echo -e "       ########################################################"
 
-
+error=0
 
