@@ -56,13 +56,13 @@ if [ "$error" != "1" ]; then
 	echo -e "       ######"
 	echo -e "      # DONE #"
 	echo -e "       ###### "
-	echo -e "\e[94m"
+	echo -e "\e[94m\n"
 else
 	echo -e "\e[33m"
 	echo -e "       ######################"
 	echo -e "      # FINISHED WITH ERRORS #"
 	echo -e "       ###################### "
-	echo -e "\e[94m"
+	echo -e "\e[94m\n"
 fi
 		
 
@@ -124,13 +124,13 @@ if [ "$error" != "1" ]; then
 	echo -e "       ######"
 	echo -e "      # DONE #"
 	echo -e "       ###### "
-	echo -e "\e[94m"
+	echo -e "\e[94m\n"
 else
 	echo -e "\e[33m"
 	echo -e "       ######################"
 	echo -e "      # FINISHED WITH ERRORS #"
 	echo -e "       ###################### "
-	echo -e "\e[94m"
+	echo -e "\e[94m\n"
 fi
 
 
@@ -141,6 +141,7 @@ echo -e "      #                                                        #"
 echo -e "       ########################################################"
 
 error=0
+echo -e "\e[39m"
 mkdir /root/Hacks/Scripts ||
 {
 	error=1
@@ -197,18 +198,69 @@ echo -e "\n      \e[34m--- RED HAWK ---\e[39m"
      }  
 
 
+echo -e "\n      \e[34m--- LINENUM.SH ---\e[39m"
+{
+	mkdir /root/Hacks/LinEnum &&
+	git clone https://github.com/rebootuser/LinEnum.git /root/Hacks/LinEnum &&
+	cp /root/Hacks/LinEnum/LinEnum.sh /root/Hacks/Scripts/LinEnum.sh &&
+	rm -r /root/Hacks/LinEnum						## TESTOWE DANE - POPRAWIC
+
+} || {
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+     }  
+
+
+echo -e "\n      \e[34m--- UNIX-PRIVESC-CHECK ---\e[39m"
+{
+	mkdir /root/Hacks/UPC &&
+	wget http://pentestmonkey.net/tools/unix-privesc-check/unix-privesc-check-1.4.tar.gz -P /root/Hacks/UPC &&
+	tar -xvf /root/Hacks/UPC/unix-privesc-check-1.4.tar.gz -C /root/Hacks/UPC &&
+	cp /root/Hacks/UPC/unix-privesc-check-1.4/unix-privesc-check /root/Hacks/Scripts/upc.sh &&
+	rm -r /root/Hacks/UPC									## TESTOWE DANE - POPRAWIC
+
+} || {
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+     }  
+
+
+echo -e "\n      \e[34m--- LINUX-EXPLOIT-SUGGESTER-2 ---\e[39m"
+{
+	mkdir /root/Hacks/LES2 &&
+	git clone https://github.com/jondonas/linux-exploit-suggester-2.git /root/Hacks/LES2 &&
+	cp /root/Hacks/LES2/linux-exploit-suggester-2.pl /root/Hacks/Scripts/les2.pl &&
+	rm -r /root/Hacks/LES2								## TESTOWE DANE - POPRAWIC
+
+} || {
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+     }  
+
 if [ "$error" != "1" ]; then
 	echo -e "\e[32m"
 	echo -e "       ######"
 	echo -e "      # DONE #"
 	echo -e "       ###### "
-	echo -e "\e[94m\n\n\n"
+	echo -e "\e[94m\n"
 else
 	echo -e "\e[33m"
 	echo -e "       ######################"
 	echo -e "      # FINISHED WITH ERRORS #"
 	echo -e "       ###################### "
-	echo -e "\e[94m\n\n\n"
+	echo -e "\e[94m\n"
 fi
 
 
@@ -219,4 +271,47 @@ echo -e "      #                                                        #"
 echo -e "       ########################################################"
 
 error=0
+echo -e "\n      \e[34m--- CREATE .VIMRC ---\e[39m"
+touch /root/.vimrc || 
+{	
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+}
 
+echo -e "\n      \e[34m--- CONFIGURE .VIMRC ---\e[39m"
+{
+	echo "set expandtab" >> /root/.vimrc &&
+	echo "set expandtab >> /root/.vimrc" &&
+	echo "set number" >> /root/.vimrc &&
+	echo "set number >> /root/.vimrc" &&
+	echo "set tabstop=4" >> /root/.vimrc &&
+	echo "set tabstop=4 >> /root/.vimrc" &&
+	echo "syntax enable" >> /root/.vimrc &&
+	echo "syntax enable >> /root/.vimrc"
+} || {
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+     }
+
+
+if [ "$error" != "1" ]; then
+	echo -e "\e[32m"
+	echo -e "       ######"
+	echo -e "      # DONE #"
+	echo -e "       ###### "
+	echo -e "\e[94m\n"
+else
+	echo -e "\e[33m"
+	echo -e "       ######################"
+	echo -e "      # FINISHED WITH ERRORS #"
+	echo -e "       ###################### "
+	echo -e "\e[94m\n"
+fi
