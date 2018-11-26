@@ -186,7 +186,7 @@ echo -e "\n      \e[34m--- SECLISTS ---\e[39m"
 echo -e "\n      \e[34m--- RED HAWK ---\e[39m"
 {
 	mkdir /root/Hacks/RedHawk &&
-	git clone git clone https://github.com/Tuhinshubhra/RED_HAWK.git /root/Hacks/Red_Hawk ## TESTOWE DANE - POPRAWIC
+	git clone https://github.com/Tuhinshubhra/RED_HAWK.git /root/Hacks/Red_Hawk ## TESTOWE DANE - POPRAWIC
 
 } || {
 	error=1
