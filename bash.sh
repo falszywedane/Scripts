@@ -165,6 +165,18 @@ apt install terminator ||
 }
 
 
+echo -e "\n      \e[34m--- WINE32 ---\e[39m"
+apt install wine32 ||
+{
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+}
+
+
 echo -e "\n      \e[34m--- SECLISTS ---\e[39m"
 {
 	mkdir /root/Hacks/SecLists &&
