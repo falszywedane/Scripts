@@ -26,7 +26,7 @@ echo -e "       ########################################################"
 error=0
 
 {
-	echo "deb http://http.kali.org/kali kali-rolling main non-free contrib" >> /etc/apt/sources.list && 
+	echo "deb http://http.kali.org/kali kali-rolling main non-free contrib" > /etc/apt/sources.list && 
 	echo -e "\n\e[39mdeb http://http.kali.org/kali kali-rolling main non-free contrib >> /etc/apt/sources.list " 	
 } || {
 	$error = 1
@@ -39,7 +39,7 @@ error=0
 }
 
 {
-	echo "deb-src http://http.kali.org/kali kali-rolling main non-free contrib" > /etc/apt/sources.list &&
+	echo "deb-src http://http.kali.org/kali kali-rolling main non-free contrib" >> /etc/apt/sources.list &&
 	echo -e "deb-src http://http.kali.org/kali kali-rolling main non-free contrib > /etc/apt/sources.list "
 } || {	
 	$error = 1
@@ -249,6 +249,23 @@ echo -e "\n      \e[34m--- LINUX-EXPLOIT-SUGGESTER-2 ---\e[39m"
 	echo -e "\e[94m"
      }  
 
+
+echo -e "\n      \e[34m--- JOHN-THE-RIPPER-JUMBO ---\e[39m"
+{
+	mkdir /root/Hacks/JTRJ &&
+	git clone https://github.com/magnumripper/JohnTheRipper.git /root/Hacks/JTRJ &&
+	#rm -r /root/Hacks/JTRJ								## TESTOWE DANE - POPRAWIC - dodać budowanie i instalację!
+
+} || {
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+     } 
+
+ 
 if [ "$error" != "1" ]; then
 	echo -e "\e[32m"
 	echo -e "       ######"
