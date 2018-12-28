@@ -340,10 +340,14 @@ echo -e "\n      \e[34m--- CONFIGURE .VIMRC ---\e[39m"
 
 echo -e "\n      \e[34m--- CONFIGURE IPTABLES ---\e[39m"
 {
+    iptables -F
+        # ^^ Usun istniejace reguly
     iptables -A INPUT -I -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT  
         # ^^ Akceptuj wszystkie pakiety z ustanowionych polaczen
     iptables -A INPUT -m conntrack --ctstate INVALID 2 -j DROP                       
         # ^^ Odrzucaj wszystkie nieprawidlowe pakiety 
+    iptables -A INPUT -p tcp --dport 80 -m limit --limit 25/minute --limit-burst 100/minute -j ACCEPT
+        # ^^ Ogranicz liczbe polaczen TCP na porcie 80 do 25/min po osiagnieciu pulapu 100/min    
     // TODO	
 } || {
 	error=1
