@@ -340,7 +340,11 @@ echo -e "\n      \e[34m--- CONFIGURE .VIMRC ---\e[39m"
 
 echo -e "\n      \e[34m--- CONFIGURE IPTABLES ---\e[39m"
 {
-                            // TODO	
+    iptables -A INPUT -I -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT  
+        # ^^ Akceptuj wszystkie pakiety z ustanowionych polaczen
+    iptables -A INPUT -m conntrack --ctstate INVALID 2 -j DROP                       
+        # ^^ Odrzucaj wszystkie nieprawidlowe pakiety 
+    // TODO	
 } || {
 	error=1
 	echo -e "\e[31m"
