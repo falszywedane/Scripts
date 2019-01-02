@@ -284,6 +284,31 @@ echo -e "\n      \e[34m--- JOHN-THE-RIPPER-JUMBO ---\e[39m"
 	echo -e "\e[94m"
      } 
 
+echo -e "\n      \e[34m--- RKHUNTER ---\e[39m"
+{
+    apt install rkhunter
+} || {
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+     } 
+
+
+echo -e "\n      \e[34m--- FAIL2BAN ---\e[39m"
+{
+    apt install fail2ban
+} || {
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+     } 
+
  
 if [ "$error" != "1" ]; then
 	echo -e "\e[32m"
@@ -348,7 +373,8 @@ echo -e "\n      \e[34m--- CONFIGURE IPTABLES ---\e[39m"
         # ^^ Odrzucaj wszystkie nieprawidlowe pakiety 
     iptables -A INPUT -p tcp --dport 80 -m limit --limit 25/minute --limit-burst 100/minute -j ACCEPT
         # ^^ Ogranicz liczbe polaczen TCP na porcie 80 do 25/min po osiagnieciu pulapu 100/min    
-    // TODO	
+    # TODO Tworzenie logow!
+    # TODO Odporność na reboot	
 } || {
 	error=1
 	echo -e "\e[31m"
@@ -358,6 +384,32 @@ echo -e "\n      \e[34m--- CONFIGURE IPTABLES ---\e[39m"
 	echo -e "\e[94m"
      }
 
+
+echo -e "\n      \e[34m--- KERNEL HARDENING ---\e[39m"
+{
+   
+    sysctl kernel.core_uses_pid=1
+    sysctl kernel.kptr_restrict=2
+    sysctl kernel.sysrq=0
+    sysctl kernel.yama.ptrace_scope=3        
+    sysctl net.ipv4.conf.all.accept_redirects=0
+    sysctl net.ipv4.conf.all.log_martians=1
+    sysctl net.ipv4.conf.all.rp_filter=1
+    sysctl net.ipv4.conf.all.send_redirects=0
+    sysctl net.ipv4.conf.default.accept_redirects=0
+    sysctl net.ipv4.conf.default.accept_source_route=0
+    sysctl net.ipv4.conf.default.log_martians=1
+    sysctl net.ipv6.conf.all.accept_redirects=0
+    sysctl net.ipv6.conf.default.accept_redirects=0
+
+} || {
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+     }
 
 
 if [ "$error" != "1" ]; then
