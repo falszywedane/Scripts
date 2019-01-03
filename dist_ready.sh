@@ -19,7 +19,7 @@ echo " .........@00111101010001001101110@.......   Kali Linux Distribution    ..
 echo " ............@10111001100010101@..........   Customizing & Hardening    .."
 echo " ...............@00101110101@.............           Script             .."
 echo " ..................@10101@................................................"
-echo " .....................@.............................. 2018 ..............."
+echo " .....................@.............................. 2019 ..............."
 echo " ........................................................................."
 
 echo -e "\e[94m\n"
@@ -272,7 +272,7 @@ echo -e "\n      \e[34m--- LINUX-EXPLOIT-SUGGESTER-2 ---\e[39m"
 echo -e "\n      \e[34m--- JOHN-THE-RIPPER-JUMBO ---\e[39m"
 {
 	mkdir /root/Hacks/JTRJ &&
-	git clone https://github.com/magnumripper/JohnTheRipper.git /root/Hacks/JTRJ &&
+	git clone https://github.com/magnumripper/JohnTheRipper.git /root/Hacks/JTRJ
 	#rm -r /root/Hacks/JTRJ								## TESTOWE DANE - POPRAWIC - dodać budowanie i instalację!
 
 } || {
@@ -388,19 +388,19 @@ echo -e "\n      \e[34m--- CONFIGURE IPTABLES ---\e[39m"
 echo -e "\n      \e[34m--- KERNEL HARDENING ---\e[39m"
 {
    
-    sysctl kernel.core_uses_pid=1
-    sysctl kernel.kptr_restrict=2
-    sysctl kernel.sysrq=0
-    sysctl kernel.yama.ptrace_scope=3        
-    sysctl net.ipv4.conf.all.accept_redirects=0
-    sysctl net.ipv4.conf.all.log_martians=1
-    sysctl net.ipv4.conf.all.rp_filter=1
-    sysctl net.ipv4.conf.all.send_redirects=0
-    sysctl net.ipv4.conf.default.accept_redirects=0
-    sysctl net.ipv4.conf.default.accept_source_route=0
-    sysctl net.ipv4.conf.default.log_martians=1
-    sysctl net.ipv6.conf.all.accept_redirects=0
-    sysctl net.ipv6.conf.default.accept_redirects=0
+    echo "kernel.core_uses_pid=1" >> /etc/sysctl.conf
+    echo "kernel.kptr_restrict=2" >> /etc/sysctl.conf
+    echo "kernel.sysrq=0" >> /etc/sysctl.conf
+    echo "kernel.yama.ptrace_scope=3" >> /etc/sysctl.conf        
+    echo "net.ipv4.conf.all.accept_redirects=0" >> /etc/sysctl.conf
+    echo "net.ipv4.conf.all.log_martians=1" >> /etc/sysctl.conf
+    echo "net.ipv4.conf.all.rp_filter=1" >> /etc/sysctl.conf
+    echo "net.ipv4.conf.all.send_redirects=0" >> /etc/sysctl.conf
+    echo "net.ipv4.conf.default.accept_redirects=0" >> /etc/sysctl.conf
+    echo "net.ipv4.conf.default.accept_source_route=0" >> /etc/sysctl.conf
+    echo "net.ipv4.conf.default.log_martians=1" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.all.accept_redirects=0" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.default.accept_redirects=0" >> /etc/sysctl.conf
 
 } || {
 	error=1
