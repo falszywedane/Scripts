@@ -24,6 +24,9 @@ echo " .........................................................................
 
 echo -e "\e[94m\n"
 
+
+
+
 echo -e "       ########################################################"
 echo -e "      #                                                        #"
 echo -e "      #          ====== PREPARING SOURCES.LIST ======          #"
@@ -71,6 +74,7 @@ else
 	echo -e "       ###################### "
 	echo -e "\e[94m\n"
 fi
+
 		
 
 
@@ -139,6 +143,8 @@ else
 	echo -e "       ###################### "
 	echo -e "\e[94m\n"
 fi
+
+
 
 
 echo -e "       ########################################################"
@@ -284,6 +290,22 @@ echo -e "\n      \e[34m--- JOHN-THE-RIPPER-JUMBO ---\e[39m"
 	echo -e "\e[94m"
      } 
 
+
+echo -e "\n      \e[34m--- LYNIS ---\e[39m"
+{
+	mkdir /root/Hacks/LYNIS &&
+	git clone https://github.com/CISOfy/lynis /root/Hacks/LYNIS
+
+} || {
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+     } 
+
+
 echo -e "\n      \e[34m--- RKHUNTER ---\e[39m"
 {
     apt install rkhunter
@@ -323,6 +345,8 @@ else
 	echo -e "       ###################### "
 	echo -e "\e[94m\n"
 fi
+
+
 
 
 echo -e "       ########################################################"
@@ -425,3 +449,131 @@ else
 	echo -e "       ###################### "
 	echo -e "\e[94m\n"
 fi
+
+
+
+
+echo -e "       ########################################################"
+echo -e "      #                                                        #"
+echo -e "      #                 ====== SCANNING ======                 #"
+echo -e "      #                                                        #"
+echo -e "       ########################################################"
+
+error=0
+
+echo "Do you want to engage lynis scan?(Y/n)"
+read lynis_scan
+
+while ["$lynis_scan" != "Y" -o  "$lynis_scan" != "n"]; do
+    echo "Response unrecognized, try again"
+    echo "Do you want to engage lynis scan?(Y/n)"
+    read lynis_scan
+done
+
+if ["$lynis_scan" == "Y"]; then
+    echo "Launching lynis..."
+    /root/Hacks/LYNIS/lynis audit system ||
+{
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+	
+}
+fi
+
+echo "Do you want to engage rkhunter scan?(Y/n)"
+read rkhunter_scan
+
+while ["$rkhunter_scan" != "Y" -o  "$rkhunter_scan" != "n"]; do
+    echo "Response unrecognized, try again"
+    echo "Do you want to engage rkhunter scan?(Y/n)"
+    read lynis_scan
+done
+
+if ["$rkhunter_scan" == "Y"]; then
+    echo "Launching rkhunter..."
+    rkhunter -c ||
+{
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+	
+}
+fi
+
+if [ "$error" != "1" ]; then
+	echo -e "\e[32m"
+	echo -e "       ######"
+	echo -e "      # DONE #"
+	echo -e "       ###### "
+	echo -e "\e[94m\n"
+else
+	echo -e "\e[33m"
+	echo -e "       ######################"
+	echo -e "      # FINISHED WITH ERRORS #"
+	echo -e "       ###################### "
+	echo -e "\e[94m\n"
+fi
+
+
+
+
+echo -e "       ########################################################"
+echo -e "      #                                                        #"
+echo -e "      #                  ====== CLEANING ======                #"
+echo -e "      #                                                        #"
+echo -e "       ########################################################"
+
+error=0
+
+echo -e "\n      \e[34m--- APT CLEAN ---\e[39m"
+apt clean ||
+{
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+	
+}
+
+echo -e "\n      \e[34m--- APT AUTOREMOVE ---\e[39m"
+apt autoremove ||
+{
+	error=1
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+}
+
+
+if [ "$error" != "1" ]; then
+	echo -e "\e[32m"
+	echo -e "       ######"
+	echo -e "      # DONE #"
+	echo -e "       ###### "
+	echo -e "\e[94m\n"
+else
+	echo -e "\e[33m"
+	echo -e "       ######################"
+	echo -e "      # FINISHED WITH ERRORS #"
+	echo -e "       ###################### "
+	echo -e "\e[94m\n"
+fi
+
+
+	echo -e "\e[94m"
+	echo -e "       #################"
+	echo -e "      # SCRIPT FINISHED #"
+	echo -e "       ################# "
+	echo -e "\e[94m\n"
+
