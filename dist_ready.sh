@@ -1,4 +1,45 @@
 #! /bin/bash
+
+error=0
+
+fail_print()
+{
+	echo -e "\e[31m"
+	echo -e "       ######"
+	echo -e "      # FAIL #"
+	echo -e "       ###### "
+	echo -e "\e[94m"
+}
+
+done_print()
+{
+	    echo -e "\e[32m"
+	    echo -e "       ######"
+	    echo -e "      # DONE #"
+	    echo -e "       ###### "
+	    echo -e "\e[94m\n"
+}
+
+finished_with_errors_print()
+{
+	    echo -e "\e[33m"
+	    echo -e "       ######################"
+	    echo -e "      # FINISHED WITH ERRORS #"
+	    echo -e "       ###################### "
+	    echo -e "\e[94m\n"
+}
+
+error_check()
+{
+    if [ "$1" -eq "0" ]; then
+        done_print
+    else
+        finished_with_errors_print
+    fi
+}
+
+
+
 echo " ........................................................................."
 echo " ..............110011010010110............................................"
 echo " ..........00100110101110100110101........................................"
@@ -39,43 +80,21 @@ error=0
 	echo "deb http://http.kali.org/kali kali-rolling main non-free contrib" > /etc/apt/sources.list && 
 	echo -e "\n\e[39mdeb http://http.kali.org/kali kali-rolling main non-free contrib > /etc/apt/sources.list " 	
 } || {
-	$error = 1
-	echo -e "\n\e[31mdeb http://http.kali.org/kali kali-rolling main non-free contrib > /etc/apt/sources.list " 	
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
-}
+	    $error = 1
+        fail_print
+     }
 
 {
 	echo "deb-src http://http.kali.org/kali kali-rolling main non-free contrib" >> /etc/apt/sources.list &&
 	echo -e "deb-src http://http.kali.org/kali kali-rolling main non-free contrib >> /etc/apt/sources.list "
 } || {	
-	$error = 1
-	echo -e "\e[31mdeb-src http://http.kali.org/kali kali-rolling main non-free contrib >> /etc/apt/sources.list "
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	    $error = 1
+        fail_print
      }
 
-if [ "$error" != "1" ]; then
-	echo -e "\e[32m"
-	echo -e "       ######"
-	echo -e "      # DONE #"
-	echo -e "       ###### "
-	echo -e "\e[94m\n"
-else
-	echo -e "\e[33m"
-	echo -e "       ######################"
-	echo -e "      # FINISHED WITH ERRORS #"
-	echo -e "       ###################### "
-	echo -e "\e[94m\n"
-fi
+error_check $error
 
-		
+
 
 
 echo -e "       ########################################################"
@@ -90,61 +109,31 @@ echo -e "\n      \e[34m--- APT CLEAN ---\e[39m"
 apt clean ||
 {
 	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
-	
+	fail_print
 }
 
 echo -e "\n      \e[34m--- APT UPDATE ---\e[39m"
 apt update ||
 {
 	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+    fail_print
 }
 
 echo -e "\n      \e[34m--- APT FULL-UPGRADE ---\e[39m"
 apt full-upgrade ||
 {
 	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+    fail_print
 }
 	
 echo -e "\n      \e[34m--- APT AUTOREMOVE ---\e[39m"
 apt autoremove ||
 {
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+    error=1
+	fail_print
 }
 
-if [ "$error" != "1" ]; then
-	echo -e "\e[32m"
-	echo -e "       ######"
-	echo -e "      # DONE #"
-	echo -e "       ###### "
-	echo -e "\e[94m\n"
-else
-	echo -e "\e[33m"
-	echo -e "       ######################"
-	echo -e "      # FINISHED WITH ERRORS #"
-	echo -e "       ###################### "
-	echo -e "\e[94m\n"
-fi
-
-
+error_check $error
 
 
 echo -e "       ########################################################"
@@ -153,16 +142,14 @@ echo -e "      #         ====== DOWNLOADING & INSTALLING  ======        #"
 echo -e "      #                                                        #"
 echo -e "       ########################################################"
 
+#mkdir /root/Hacks
+
 error=0
 echo -e "\e[39m"
 mkdir /root/Hacks/Scripts ||
 {
 	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	fail_print
 }
 
 
@@ -170,11 +157,7 @@ echo -e "\n      \e[34m--- TERMINATOR ---\e[39m"
 apt install terminator ||
 {
 	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	fail_print
 }
 
 
@@ -182,44 +165,32 @@ echo -e "\n      \e[34m--- WINE32 ---\e[39m"
 apt install wine32 ||
 {
 	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+    fail_print
 }
 
 
 echo -e "\n      \e[34m--- SECLISTS ---\e[39m"
 {
 	mkdir /root/Hacks/SecLists &&
-	git clone https://github.com/danielmiessler/SecLists.git /root/Hacks/SecLists && ## TESTOWE DANE - POPRAWIC
+	git clone https://github.com/danielmiessler/SecLists.git /root/Hacks/SecLists &&
 	rm /root/Hack/SecLists/CON* &&
 	rm /root/Hack/SecLists/LICENSE &&
 	rm /root/Hack/SecLists/README.md
 
 } || {
-	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	    error=1
+        fail_print
      }  
 
 
 echo -e "\n      \e[34m--- RED HAWK ---\e[39m"
 {
 	mkdir /root/Hacks/RedHawk &&
-	git clone https://github.com/Tuhinshubhra/RED_HAWK.git /root/Hacks/Red_Hawk ## TESTOWE DANE - POPRAWIC
+	git clone https://github.com/Tuhinshubhra/RED_HAWK.git /root/Hacks/Red_Hawk
 
 } || {
-	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	    error=1
+	    fail_print
      }  
 
 
@@ -228,15 +199,11 @@ echo -e "\n      \e[34m--- LINENUM.SH ---\e[39m"
 	mkdir /root/Hacks/LinEnum &&
 	git clone https://github.com/rebootuser/LinEnum.git /root/Hacks/LinEnum &&
 	cp /root/Hacks/LinEnum/LinEnum.sh /root/Hacks/Scripts/LinEnum.sh &&
-	rm -r /root/Hacks/LinEnum						## TESTOWE DANE - POPRAWIC
+	rm -r /root/Hacks/LinEnum
 
 } || {
-	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	    error=1
+	    fail_print
      }  
 
 
@@ -246,15 +213,11 @@ echo -e "\n      \e[34m--- UNIX-PRIVESC-CHECK ---\e[39m"
 	wget http://pentestmonkey.net/tools/unix-privesc-check/unix-privesc-check-1.4.tar.gz -P /root/Hacks/UPC &&
 	tar -xvf /root/Hacks/UPC/unix-privesc-check-1.4.tar.gz -C /root/Hacks/UPC &&
 	cp /root/Hacks/UPC/unix-privesc-check-1.4/unix-privesc-check /root/Hacks/Scripts/upc.sh &&
-	rm -r /root/Hacks/UPC									## TESTOWE DANE - POPRAWIC
+	rm -r /root/Hacks/UPC
 
 } || {
-	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	    error=1
+    	fail_print
      }  
 
 
@@ -263,15 +226,11 @@ echo -e "\n      \e[34m--- LINUX-EXPLOIT-SUGGESTER-2 ---\e[39m"
 	mkdir /root/Hacks/LES2 &&
 	git clone https://github.com/jondonas/linux-exploit-suggester-2.git /root/Hacks/LES2 &&
 	cp /root/Hacks/LES2/linux-exploit-suggester-2.pl /root/Hacks/Scripts/les2.pl &&
-	rm -r /root/Hacks/LES2								## TESTOWE DANE - POPRAWIC
+	rm -r /root/Hacks/LES2
 
 } || {
-	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	    error=1
+	    fail_print
      }  
 
 
@@ -279,15 +238,10 @@ echo -e "\n      \e[34m--- JOHN-THE-RIPPER-JUMBO ---\e[39m"
 {
 	mkdir /root/Hacks/JTRJ &&
 	git clone https://github.com/magnumripper/JohnTheRipper.git /root/Hacks/JTRJ
-	#rm -r /root/Hacks/JTRJ								## TESTOWE DANE - POPRAWIC - dodać budowanie i instalację!
 
 } || {
-	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	    error=1
+	    fail_print
      } 
 
 
@@ -297,12 +251,8 @@ echo -e "\n      \e[34m--- LYNIS ---\e[39m"
 	git clone https://github.com/CISOfy/lynis /root/Hacks/LYNIS
 
 } || {
-	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	    error=1
+	    fail_print
      } 
 
 
@@ -310,12 +260,8 @@ echo -e "\n      \e[34m--- RKHUNTER ---\e[39m"
 {
     apt install rkhunter
 } || {
-	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	    error=1
+	    fail_print
      } 
 
 
@@ -323,29 +269,12 @@ echo -e "\n      \e[34m--- FAIL2BAN ---\e[39m"
 {
     apt install fail2ban
 } || {
-	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	    error=1
+	    fail_print
      } 
 
  
-if [ "$error" != "1" ]; then
-	echo -e "\e[32m"
-	echo -e "       ######"
-	echo -e "      # DONE #"
-	echo -e "       ###### "
-	echo -e "\e[94m\n"
-else
-	echo -e "\e[33m"
-	echo -e "       ######################"
-	echo -e "      # FINISHED WITH ERRORS #"
-	echo -e "       ###################### "
-	echo -e "\e[94m\n"
-fi
-
+error_check $error
 
 
 
@@ -360,17 +289,13 @@ echo -e "\n      \e[34m--- CREATE .VIMRC ---\e[39m"
 touch /root/.vimrc || 
 {	
 	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	fail_print
 }
 
 echo -e "\n      \e[34m--- CONFIGURE .VIMRC ---\e[39m"
 {
-	echo "set expandtab" >> /root/.vimrc &&
-	echo "set expandtab >> /root/.vimrc" &&
+	echo "set expandtab" > /root/.vimrc &&
+	echo "set expandtab > /root/.vimrc" &&
 	echo "set number" >> /root/.vimrc &&
 	echo "set number >> /root/.vimrc" &&
 	echo "set tabstop=4" >> /root/.vimrc &&
@@ -378,12 +303,8 @@ echo -e "\n      \e[34m--- CONFIGURE .VIMRC ---\e[39m"
 	echo "syntax enable" >> /root/.vimrc &&
 	echo "syntax enable >> /root/.vimrc"
 } || {
-	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	    error=1
+	    fail_print
      }
 
 
@@ -400,12 +321,8 @@ echo -e "\n      \e[34m--- CONFIGURE IPTABLES ---\e[39m"
     # TODO Tworzenie logow!
     # TODO Odporność na reboot	
 } || {
-	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	    error=1
+	    fail_print
      }
 
 
@@ -427,29 +344,12 @@ echo -e "\n      \e[34m--- KERNEL HARDENING ---\e[39m"
     echo "net.ipv6.conf.default.accept_redirects=0" >> /etc/sysctl.conf
 
 } || {
-	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	    error=1
+	    fail_print
      }
 
 
-if [ "$error" != "1" ]; then
-	echo -e "\e[32m"
-	echo -e "       ######"
-	echo -e "      # DONE #"
-	echo -e "       ###### "
-	echo -e "\e[94m\n"
-else
-	echo -e "\e[33m"
-	echo -e "       ######################"
-	echo -e "      # FINISHED WITH ERRORS #"
-	echo -e "       ###################### "
-	echo -e "\e[94m\n"
-fi
-
+error_check $error
 
 
 
@@ -475,12 +375,7 @@ if ["$lynis_scan" == "Y"]; then
     /root/Hacks/LYNIS/lynis audit system ||
 {
 	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
-	
+	fail_print
 }
 fi
 
@@ -497,30 +392,12 @@ if ["$rkhunter_scan" == "Y"]; then
     echo "Launching rkhunter..."
     rkhunter -c ||
 {
-	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
-	
+    error=1
+    fail_print
 }
 fi
 
-if [ "$error" != "1" ]; then
-	echo -e "\e[32m"
-	echo -e "       ######"
-	echo -e "      # DONE #"
-	echo -e "       ###### "
-	echo -e "\e[94m\n"
-else
-	echo -e "\e[33m"
-	echo -e "       ######################"
-	echo -e "      # FINISHED WITH ERRORS #"
-	echo -e "       ###################### "
-	echo -e "\e[94m\n"
-fi
-
+error_check $error
 
 
 
@@ -536,39 +413,17 @@ echo -e "\n      \e[34m--- APT CLEAN ---\e[39m"
 apt clean ||
 {
 	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
-	
+	fail_print
 }
 
 echo -e "\n      \e[34m--- APT AUTOREMOVE ---\e[39m"
 apt autoremove ||
 {
 	error=1
-	echo -e "\e[31m"
-	echo -e "       ######"
-	echo -e "      # FAIL #"
-	echo -e "       ###### "
-	echo -e "\e[94m"
+	fail_print
 }
 
-
-if [ "$error" != "1" ]; then
-	echo -e "\e[32m"
-	echo -e "       ######"
-	echo -e "      # DONE #"
-	echo -e "       ###### "
-	echo -e "\e[94m\n"
-else
-	echo -e "\e[33m"
-	echo -e "       ######################"
-	echo -e "      # FINISHED WITH ERRORS #"
-	echo -e "       ###################### "
-	echo -e "\e[94m\n"
-fi
+error_check $error
 
 
 	echo -e "\e[94m"
