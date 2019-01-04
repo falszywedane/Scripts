@@ -364,13 +364,7 @@ error=0
 echo "Do you want to engage lynis scan?(Y/n)"
 read lynis_scan
 
-while ["$lynis_scan" != "Y" -o  "$lynis_scan" != "n"]; do
-    echo "Response unrecognized, try again"
-    echo "Do you want to engage lynis scan?(Y/n)"
-    read lynis_scan
-done
-
-if ["$lynis_scan" == "Y"]; then
+if [ "$lynis_scan" = "Y" ]; then
     echo "Launching lynis..."
     /root/Hacks/LYNIS/lynis audit system ||
 {
@@ -382,13 +376,7 @@ fi
 echo "Do you want to engage rkhunter scan?(Y/n)"
 read rkhunter_scan
 
-while ["$rkhunter_scan" != "Y" -o  "$rkhunter_scan" != "n"]; do
-    echo "Response unrecognized, try again"
-    echo "Do you want to engage rkhunter scan?(Y/n)"
-    read lynis_scan
-done
-
-if ["$rkhunter_scan" == "Y"]; then
+if [ "$rkhunter_scan" = "Y" ]; then
     echo "Launching rkhunter..."
     rkhunter -c ||
 {
