@@ -80,7 +80,7 @@ error=0
 	echo "deb http://http.kali.org/kali kali-rolling main non-free contrib" > /etc/apt/sources.list && 
 	echo -e "\n\e[39mdeb http://http.kali.org/kali kali-rolling main non-free contrib > /etc/apt/sources.list " 	
 } || {
-	    $error = 1
+        $error = 1
         fail_print
      }
 
@@ -88,7 +88,7 @@ error=0
 	echo "deb-src http://http.kali.org/kali kali-rolling main non-free contrib" >> /etc/apt/sources.list &&
 	echo -e "deb-src http://http.kali.org/kali kali-rolling main non-free contrib >> /etc/apt/sources.list "
 } || {	
-	    $error = 1
+        $error = 1
         fail_print
      }
 
@@ -342,6 +342,17 @@ echo -e "\n      \e[34m--- KERNEL HARDENING ---\e[39m"
     echo "net.ipv4.conf.default.log_martians=1" >> /etc/sysctl.conf
     echo "net.ipv6.conf.all.accept_redirects=0" >> /etc/sysctl.conf
     echo "net.ipv6.conf.default.accept_redirects=0" >> /etc/sysctl.conf
+
+} || {
+	    error=1
+	    fail_print
+     }
+
+
+echo -e "\n      \e[34m--- STARTTUP SCRIPT CHMOD CHANGE ---\e[39m"
+{
+    chmod 0700 /etc/rc*
+    chmod 0700 /etc/init.d*
 
 } || {
 	    error=1
