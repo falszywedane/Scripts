@@ -330,18 +330,43 @@ echo -e "\n      \e[34m--- KERNEL HARDENING ---\e[39m"
 {
    
     echo "kernel.core_uses_pid=1" >> /etc/sysctl.conf
+    echo "kernel.core_uses_pid=1"
+    
     echo "kernel.kptr_restrict=2" >> /etc/sysctl.conf
+    echo "kernel.kptr_restrict=2"
+    
     echo "kernel.sysrq=0" >> /etc/sysctl.conf
+    echo "kernel.sysrq=0"
+    
     echo "kernel.yama.ptrace_scope=3" >> /etc/sysctl.conf        
+    echo "kernel.yama.ptrace_scope=3"
+    
     echo "net.ipv4.conf.all.accept_redirects=0" >> /etc/sysctl.conf
+    echo "net.ipv4.conf.all.accept_redirects=0"
+    
     echo "net.ipv4.conf.all.log_martians=1" >> /etc/sysctl.conf
+    echo "net.ipv4.conf.all.log_martians=1"
+    
     echo "net.ipv4.conf.all.rp_filter=1" >> /etc/sysctl.conf
+    echo "net.ipv4.conf.all.rp_filter=1"
+    
     echo "net.ipv4.conf.all.send_redirects=0" >> /etc/sysctl.conf
+    echo "net.ipv4.conf.all.send_redirects=0"
+    
     echo "net.ipv4.conf.default.accept_redirects=0" >> /etc/sysctl.conf
+    echo "net.ipv4.conf.default.accept_redirects=0"
+    
     echo "net.ipv4.conf.default.accept_source_route=0" >> /etc/sysctl.conf
+    echo "net.ipv4.conf.default.accept_source_route=0"
+    
     echo "net.ipv4.conf.default.log_martians=1" >> /etc/sysctl.conf
+    echo "net.ipv4.conf.default.log_martians=1"
+    
     echo "net.ipv6.conf.all.accept_redirects=0" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.all.accept_redirects=0"
+       
     echo "net.ipv6.conf.default.accept_redirects=0" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.default.accept_redirects=0"
 
 } || {
 	    error=1
@@ -352,7 +377,9 @@ echo -e "\n      \e[34m--- KERNEL HARDENING ---\e[39m"
 echo -e "\n      \e[34m--- STARTTUP SCRIPT CHMOD CHANGE ---\e[39m"
 {
     chmod 0700 /etc/rc*
+    echo "chmod 0700 /etc/rc*"
     chmod 0700 /etc/init.d*
+    echo "chmod 0700 /etc/init.d*"
 
 } || {
 	    error=1
