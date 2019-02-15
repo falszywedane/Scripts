@@ -273,7 +273,27 @@ echo -e "\n      \e[34m--- FAIL2BAN ---\e[39m"
 	    fail_print
      } 
 
+echo -e "\n      \e[34m--- KERNEL HEADERS ---\e[39m"
+{
+    apt install linux-headers-$(uname -r)
+} || {
+	    error=1
+	    fail_print
+     } 
  
+echo -e "\n      \e[34m--- VMWARE WORKSTATION ---\e[39m"
+{
+    wget https://www.vmware.com/go/getworkstation-linux -O /root/Downloads/vmware_inst.bundle
+    chmod +x /root/Downloads/vmware_inst.bundle
+    /root/Downloads/vmware_inst.bundle
+
+} || {
+	    error=1
+	    fail_print
+     } 
+
+
+
 error_check $error
 
 
