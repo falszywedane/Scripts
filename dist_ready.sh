@@ -389,7 +389,7 @@ echo -e "\n      \e[34m--- STARTTUP SCRIPT CHMOD CHANGE ---\e[39m"
 
 echo -e "\n      \e[34m--- SETTING WALLPAPER UP ---\e[39m"
 {
-	wget https://i2.wp.com/wodkiewicz-sosnowski.pl/wp-content/uploads/2018/09/pedro-lastra-157071-unsplash.jpg?ssl=1 -O /root/Pictures/tapeta.jpeg
+	wget https://i2.wp.com/wodkiewicz-sosnowski.pl/wp-content/uploads/2018/09/pedro-lastra-157071-unsplash.jpg?ssl=1 -O /root/Pictures/tapeta.jpg
 	gsettings set org.gnome.desktop.background picture-uri file:///root/Pictures/tapeta.jpg
  
 } || {
