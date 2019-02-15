@@ -142,7 +142,7 @@ echo -e "      #         ====== DOWNLOADING & INSTALLING  ======        #"
 echo -e "      #                                                        #"
 echo -e "       ########################################################"
 
-#mkdir /root/Hacks
+mkdir /root/Hacks
 
 error=0
 echo -e "\e[39m"
@@ -387,6 +387,17 @@ echo -e "\n      \e[34m--- STARTTUP SCRIPT CHMOD CHANGE ---\e[39m"
      }
 
 
+echo -e "\n      \e[34m--- SETTING WALLPAPER UP ---\e[39m"
+{
+	wget https://i2.wp.com/wodkiewicz-sosnowski.pl/wp-content/uploads/2018/09/pedro-lastra-157071-unsplash.jpg?ssl=1 -O /root/Pictures/tapeta.jpeg
+	gsettings set org.gnome.desktop.background picture-uri file:///root/Pictures/tapeta.jpg
+ 
+} || {
+	    error=1
+	    fail_print
+     }
+
+
 error_check $error
 
 
@@ -424,6 +435,7 @@ if [ "$rkhunter_scan" = "Y" ]; then
 fi
 
 error_check $error
+
 
 
 
