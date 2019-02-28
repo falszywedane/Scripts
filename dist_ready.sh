@@ -161,6 +161,14 @@ apt install terminator ||
 }
 
 
+echo -e "\n      \e[34m--- FTP ---\e[39m"
+apt install ftp ||
+{
+	error=1
+	fail_print
+}
+
+
 echo -e "\n      \e[34m--- WINE32 ---\e[39m"
 apt install wine32 ||
 {
